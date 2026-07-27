@@ -65,7 +65,7 @@ class GumroadLicenseKey : ScopedBottomSheetFragment() {
 
         binding.licenseKey.doOnTextChanged { text, _, _, _ ->
             if (text.toString().length == 35) {
-                binding.verify.visible(false)
+                binding.verify.visible(true)
             } else {
                 binding.verify.gone()
             }
