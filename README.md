@@ -1,15 +1,12 @@
-# Felicity
+# Felicity Music Player
 
-*_Felicity_ is the third and final app of the three projects I had planned for my own learning, the
-first two are [Positional](https://github.com/Hamza417/Positional)
-and [Inure App Manager](https://github.com/Hamza417/Inure).*
+*_Felicity_ is the third and final app of the three projects that the developer had planned for his own learning, the
+first two are [Positional](https://github.com/Hamza417/Positional) and [Inure App Manager](https://github.com/Hamza417/Inure).*
 
-The development of the app has started and if you've used the first two apps you might want to join
-the [Telegram Channel](https://t.me/felicity_music_player) and become the part of the whole initial
+The development of the app is ongoing and if you've used the first two apps you might want to join the [Telegram Channel](https://t.me/felicity_music_player) and become the part of the whole initial
 development process.
 
-The project will be developed under the codename Felicity, the final name maybe updated in the
-future.
+The project is developed under the codename Felicity, the final name may possibly be updated in the future. 
 
 ## Stats
 
@@ -33,7 +30,7 @@ future.
 
 [![](https://img.shields.io/badge/License%20Key%20(GumRoad)-Purchase-23a094?logo=gumroad&logoColor=white)](https://hamza417.gumroad.com/l/Felicity/)
 
-Play Store users can buy full version directly from the app itself.
+Play Store users can buy full version of the original variant of the app directly from a link in the app itself.
 
 ## Features
 
@@ -86,7 +83,7 @@ Play Store users can buy full version directly from the app itself.
 
 - **True Randomized Shuffle:** Choose between Miller and Fisher-Yates shuffle algorithms.
 
-This feature list is not exhaustive and only main features are listed.
+This feature list is not comprehensive, and only the main features are listed.
 
 ## Roadmap
 
@@ -111,9 +108,9 @@ This feature list is not exhaustive and only main features are listed.
 - [x] Selection support for library management and playlist creation.
 - [x] Reproducible build
 - [x] Parametric Equalizer
-- [ ] Sleep Timer
-- [ ] Global Search Provider
-- [ ] More widgets
+- [ ] ~Sleep Timer~
+- [ ] ~Global Search Provider~
+- [ ] ~More widgets~
 - [x] Multiple Queue Support
 - [x] Bookmarks
 
@@ -121,36 +118,13 @@ This feature list is not exhaustive and only main features are listed.
 
 Features that are planned but will not be a priority.
 
-- [ ] Cue sheet support
-- [x] ~Native USB DAC support~
+- [ ] ~Cue sheet support~
+- [ ] ~Native USB DAC support~
 - [x] Oboe
 - [x] AAudio
 
-... and more features will be updated here as development progresses.
+... and more features will be updated in the original variant of the app as development progresses over there.
 
-## Screenshots
-
-|                          |                          |                          |
-|--------------------------|--------------------------|--------------------------|
-| ![](/screenshots/01.png) | ![](/screenshots/02.png) | ![](/screenshots/03.png) |
-| ![](/screenshots/04.png) | ![](/screenshots/05.png) | ![](/screenshots/06.png) |
-| ![](/screenshots/07.png) | ![](/screenshots/08.png) | ![](/screenshots/11.png) |
-| ![](/screenshots/12.png) | ![](/screenshots/13.png) | ![](/screenshots/14.png) |
-| ![](/screenshots/15.png) | ![](/screenshots/16.png) | ![](/screenshots/17.png) |
-| ![](/screenshots/18.png) | ![](/screenshots/19.png) | ![](/screenshots/20.png) |
-| ![](/screenshots/21.png) | ![](/screenshots/22.png) | ![](/screenshots/23.png) |
-| ![](/screenshots/24.png) | ![](/screenshots/25.png) | ![](/screenshots/26.gif) |
-| ![](/screenshots/27.png) | ![](/screenshots/28.png) | ![](/screenshots/29.png) |
-
-| Artflow Interface        |
-|--------------------------|
-| ![](/screenshots/09.png) |
-| ![](/screenshots/10.png) |
-
-| Server Webpage                        |
-|---------------------------------------|
-| ![](/screenshots/server_01_dark.png)  |
-| ![](/screenshots/server_01_light.png) |
 
 ## Translations
 
@@ -163,7 +137,7 @@ do so [here on Crowdin](https://crowdin.com/project/felicity).
 
 ## License
 
-**Felicity Music Player** Copyright © 2026 - Hamza Rizwan
+**Felicity Music Player** Copyright © 2026 Owned & Produced by Hamza Rizwan
 
 **Felicity Music Player** is released as open source software under
 the [GNU AGPL v3](https://www.gnu.org/licenses/agpl-3.0.en.html)
@@ -171,6 +145,5 @@ license, see the [LICENSE](./LICENSE) file in the project root for the full lice
 
 ## History
 
-Felicity as a whole project is a continuation of my first ever programming
-project [Beatz](https://github.com/Hamza417/Beatz) which I
-tried to do back then solely for learning and getting used to building.
+Felicity as a whole project is a continuation of the developer's first ever programming
+project [Beatz](https://github.com/Hamza417/Beatz) which he worked on in the past primarily for his learning and also getting used to building. 
