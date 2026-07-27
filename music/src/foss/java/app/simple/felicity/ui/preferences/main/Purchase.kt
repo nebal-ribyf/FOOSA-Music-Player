@@ -50,11 +50,7 @@ class Purchase : PreferenceFragment() {
                 type = PreferenceType.SUB_HEADER
         )
 
-        val trialIcon = if (TrialPreferences.isWithinTrialPeriod()) {
-            R.drawable.ic_hourglass_top
-        } else {
-            R.drawable.ic_hourglass_bottom
-        }
+        val trialIcon = R.drawable.ic_hourglass_top
 
         val trialPeriod = Preference(
                 title = R.string.trial_period,
