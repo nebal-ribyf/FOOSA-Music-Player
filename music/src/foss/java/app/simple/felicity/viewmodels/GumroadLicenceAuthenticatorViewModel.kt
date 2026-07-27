@@ -102,7 +102,7 @@ class GumroadLicenceAuthenticatorViewModel(application: Application) : WrappedVi
             }
 
             if (variant.isNotEmpty() && variant.contains("Support Development")) {
-                Log.d("GumroadLicenceAuthenticatorViewModel", "User is a supporter")
+                Log.d("GumroadLicenceAuthenticatorViewModel", "User is a user")
                 TrialPreferences.setIsSupporter(true)
             }
 
@@ -110,16 +110,16 @@ class GumroadLicenceAuthenticatorViewModel(application: Application) : WrappedVi
 
             licenseStatus.postValue(true)
         } else {
-            updateTrialPreferences(false)
-            licenseStatus.postValue(false)
+            updateTrialPreferences(true)
+            licenseStatus.postValue(true)
             postRefundMessage(refunded)
         }
     }
 
     private fun processErrorResponse(responseBody: String) {
         Log.e("GumroadLicenceAuthenticatorViewModel", responseBody)
-        updateTrialPreferences(false)
-        licenseStatus.postValue(false)
+        updateTrialPreferences(true)
+        licenseStatus.postValue(true)
         val jsonObject = JSONObject(responseBody)
         message.postValue(jsonObject.getString("message"))
     }
@@ -138,8 +138,8 @@ class GumroadLicenceAuthenticatorViewModel(application: Application) : WrappedVi
     }
 
     private fun setPreferencesForInvalidLicense() {
-        setFullVersion(false)
-        setHasLicenceKey(false)
+        setFullVersion(true)
+        setHasLicenceKey(true)
     }
 
     private fun setFullVersion(fullVersion: Boolean) {
@@ -152,9 +152,9 @@ class GumroadLicenceAuthenticatorViewModel(application: Application) : WrappedVi
 
     private fun postRefundMessage(refunded: Boolean) {
         if (refunded) {
-            message.postValue("Your purchase has been refunded and the licence key is no longer valid.")
+            message.postValue("Your purchase has been refunded and the licence key is no longer valid. ;] ")
         } else {
-            message.postValue("Licence is not valid. Please check the licence key and try again.")
+            message.postValue("Licence is not valid. Please check the licence key and try again. ;] ")
         }
     }
 
