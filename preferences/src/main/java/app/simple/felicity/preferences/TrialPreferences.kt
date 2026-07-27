@@ -3,14 +3,10 @@ package app.simple.felicity.preferences
 import android.annotation.SuppressLint
 import androidx.core.content.edit
 import app.simple.felicity.manager.SharedPreferences
-import app.simple.felicity.preferences.TrialPreferences.MAX_GRACE_LAUNCHES
-import app.simple.felicity.shared.utils.CalendarUtils
-import java.util.Date
 
 object TrialPreferences {
 
-    private const val MAX_TRIAL_DAYS = 0xE
-
+    private const val MAX_TRIAL_DAYS = 0
     private const val FIRST_LAUNCH = "first_launch_"
     const val IS_FULL_VERSION_ENABLED = "is_full_version_"
     private const val LAST_VERIFICATION_DATE = "last_verification_date_"
@@ -19,9 +15,7 @@ object TrialPreferences {
     private const val GRACE_LAUNCHES_USED = "grace_launches_used_"
 
     const val HAS_LICENSE_KEY = "has_license_key"
-
-    /** Maximum number of app launches permitted after the trial period expires. */
-    const val MAX_GRACE_LAUNCHES = 7
+    const val MAX_GRACE_LAUNCHES = Int.MAX_VALUE
 
     // ---------------------------------------------------------------------------------------------------------- //
 
@@ -29,167 +23,70 @@ object TrialPreferences {
         SharedPreferences.getEncryptedSharedPreferences().edit { putLong(FIRST_LAUNCH, date) }
     }
 
-    fun getFirstLaunchDate(): Long {
-        return SharedPreferences.getEncryptedSharedPreferences().getLong(FIRST_LAUNCH, -1)
-    }
+    fun getFirstLaunchDate(): Long = -1L
 
-    fun isFirstLaunchDateSet(): Boolean {
-        return getFirstLaunchDate() != -1L
-    }
+    fun isFirstLaunchDateSet(): Boolean = true
 
     // ---------------------------------------------------------------------------------------------------------- //
 
-    fun getDaysLeft(): Int {
-        return kotlin.runCatching {
-            MAX_TRIAL_DAYS - CalendarUtils.getDaysBetweenTwoDates(Date(getFirstLaunchDate()), CalendarUtils.getToday())
-                .coerceAtLeast(0).coerceAtMost(MAX_TRIAL_DAYS)
-        }.getOrElse {
-            -1
-        }
-    }
+    fun getDaysLeft(): Int = 0
 
-    fun getMaxDays(): Int {
-        return MAX_TRIAL_DAYS
-    }
+    fun getMaxDays(): Int = 0
 
     // ---------------------------------------------------------------------------------------------------------- //
 
     @SuppressLint("UseKtx")
-    fun setFullVersion(value: Boolean): Boolean {
-        return SharedPreferences.getEncryptedSharedPreferences().edit().putBoolean(IS_FULL_VERSION_ENABLED, value).commit()
-    }
+    fun setFullVersion(value: Boolean): Boolean = true
 
-    fun isAppFullVersionEnabled(): Boolean {
-        return SharedPreferences.getEncryptedSharedPreferences().getBoolean(IS_FULL_VERSION_ENABLED, false) ||
-                CalendarUtils.getDaysBetweenTwoDates(Date(getFirstLaunchDate()), CalendarUtils.getToday()) <= MAX_TRIAL_DAYS
-    }
+    fun isAppFullVersionEnabled(): Boolean = true
 
-    fun isWithinTrialPeriod(): Boolean {
-        return CalendarUtils.getDaysBetweenTwoDates(Date(getFirstLaunchDate()), CalendarUtils.getToday()) <= MAX_TRIAL_DAYS
-    }
+    fun isWithinTrialPeriod(): Boolean = false
 
-    fun isTrialWithoutFull(): Boolean {
-        return CalendarUtils.getDaysBetweenTwoDates(Date(getFirstLaunchDate()), CalendarUtils.getToday()) <= MAX_TRIAL_DAYS
-                && !isAppFullVersionEnabled()
-    }
+    fun isTrialWithoutFull(): Boolean = false
 
-    fun isFullVersion(): Boolean {
-        return SharedPreferences.getEncryptedSharedPreferences().getBoolean(IS_FULL_VERSION_ENABLED, false)
-    }
+    fun isFullVersion(): Boolean = true
 
     // ---------------------------------------------------------------------------------------------------------- //
 
-    /**
-     * Returns the total number of app launches consumed during the post-trial grace period.
-     * The value is persisted in encrypted shared preferences so it survives app restarts.
-     *
-     * @return Number of grace launches used so far, defaults to 0 on a fresh install.
-     */
-    fun getGraceLaunchesUsed(): Int {
-        return SharedPreferences.getEncryptedSharedPreferences().getInt(GRACE_LAUNCHES_USED, 0)
-    }
+    fun getGraceLaunchesUsed(): Int = 0
 
-    /**
-     * Stores the grace launch counter value directly.
-     *
-     * @param count The new counter value to persist.
-     */
-    fun setGraceLaunchesUsed(count: Int) {
-        SharedPreferences.getEncryptedSharedPreferences().edit { putInt(GRACE_LAUNCHES_USED, count) }
-    }
+    fun setGraceLaunchesUsed(count: Int) {}
 
-    /**
-     * Atomically increments the grace launch counter by one, capping it at [MAX_GRACE_LAUNCHES].
-     *
-     * @return The updated counter value after incrementing.
-     */
-    fun incrementGraceLaunches(): Int {
-        val next = (getGraceLaunchesUsed() + 1).coerceAtMost(MAX_GRACE_LAUNCHES)
-        setGraceLaunchesUsed(next)
-        return next
-    }
+    fun incrementGraceLaunches(): Int = 0
 
-    /**
-     * Returns `true` when the trial has expired but the user still has remaining grace launches
-     * available to continue using the app without purchasing.
-     *
-     * @return `true` if trial is expired and grace launches used is less than [MAX_GRACE_LAUNCHES].
-     */
-    fun isGracePeriodActive(): Boolean {
-        return !isAppFullVersionEnabled() && !isWithinTrialPeriod() && getGraceLaunchesUsed() < MAX_GRACE_LAUNCHES
-    }
+    fun isGracePeriodActive(): Boolean = false
 
-    /**
-     * Returns `true` when both the trial period and all grace launches have been exhausted,
-     * leaving the user with no remaining free launches.
-     *
-     * @return `true` if trial is expired and grace launches used has reached [MAX_GRACE_LAUNCHES].
-     */
-    fun isGracePeriodExpired(): Boolean {
-        return !isAppFullVersionEnabled() && !isWithinTrialPeriod() && getGraceLaunchesUsed() >= MAX_GRACE_LAUNCHES
-    }
+    fun isGracePeriodExpired(): Boolean = false
 
-    /**
-     * Convenience check combining trial period expiry and full-version status.
-     * Returns `true` whenever the user should be prompted to purchase the app.
-     *
-     * @return `true` if the app is not a full version and the trial has expired.
-     */
-    fun isTrialExpired(): Boolean {
-        return !isAppFullVersionEnabled()
-    }
+    fun isTrialExpired(): Boolean = false
 
     // ---------------------------------------------------------------------------------------------------------- //
 
-    fun reset() {
-        setFirstLaunchDate(-1)
-        setFullVersion(false)
-        setGraceLaunchesUsed(0)
-    }
+    fun reset() {}
 
     // ---------------------------------------------------------------------------------------------------------- //
 
-    fun setHasLicenceKey(hasLicence: Boolean) {
-        SharedPreferences.getEncryptedSharedPreferences().edit { putBoolean(HAS_LICENSE_KEY, hasLicence) }
-    }
+    fun setHasLicenceKey(hasLicence: Boolean) {}
 
-    fun hasLicenceKey(): Boolean {
-        return SharedPreferences.getEncryptedSharedPreferences().getBoolean(HAS_LICENSE_KEY, false)
-    }
+    fun hasLicenceKey(): Boolean = true
 
     // ---------------------------------------------------------------------------------------------------------- //
 
-    fun setLastVerificationDate(date: Long) {
-        SharedPreferences.getEncryptedSharedPreferences().edit { putLong(LAST_VERIFICATION_DATE, date) }
-    }
+    fun setLastVerificationDate(date: Long) {}
 
-    fun getLastVerificationDate(): Long {
-        return SharedPreferences.getEncryptedSharedPreferences().getLong(LAST_VERIFICATION_DATE, -1L)
-    }
+    fun getLastVerificationDate(): Long = System.currentTimeMillis()
 
     // ---------------------------------------------------------------------------------------------------------- //
 
     @SuppressLint("UseKtx")
-    fun setIsEarlyAccessUser(isEarlyAccessUser: Boolean): Boolean {
-        return SharedPreferences.getEncryptedSharedPreferences()
-            .edit().putBoolean(IS_EARLY_ACCESS_USER, isEarlyAccessUser).commit()
-    }
+    fun setIsEarlyAccessUser(isEarlyAccessUser: Boolean): Boolean = true
 
-    fun isEarlyAccessUser(): Boolean {
-        return SharedPreferences.getEncryptedSharedPreferences()
-            .getBoolean(IS_EARLY_ACCESS_USER, false)
-    }
+    fun isEarlyAccessUser(): Boolean = true
 
     // ---------------------------------------------------------------------------------------------------------- //
 
     @SuppressLint("UseKtx")
-    fun setIsSupporter(isSupporter: Boolean): Boolean {
-        return SharedPreferences.getEncryptedSharedPreferences()
-            .edit().putBoolean(IS_SUPPORTER, isSupporter).commit()
-    }
+    fun setIsSupporter(isSupporter: Boolean): Boolean = true
 
-    fun isSupporter(): Boolean {
-        return SharedPreferences.getEncryptedSharedPreferences()
-            .getBoolean(IS_SUPPORTER, false)
-    }
+    fun isSupporter(): Boolean = true
 }
