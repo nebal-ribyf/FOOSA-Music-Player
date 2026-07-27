@@ -50,6 +50,12 @@ class Purchase : PreferenceFragment() {
                 type = PreferenceType.SUB_HEADER
         )
 
+        val trialIcon = if (TrialPreferences.isWithinTrialPeriod()) {
+            R.drawable.ic_hourglass_top
+        } else {
+            R.drawable.ic_hourglass_bottom
+        }
+
         val trialPeriod = Preference(
                 title = R.string.trial_period,
                 summary = getString(R.string.trial_period_summary, TrialPreferences.getDaysLeft()),
@@ -83,11 +89,35 @@ class Purchase : PreferenceFragment() {
                 }
         )
 
+        val playstoreHeader = Preference(
+                title = R.string.play_store,
+                type = PreferenceType.SUB_HEADER
+        )
+
+        val playStoreInfo = Preference(
+                title = R.string.play_store_foss_purchase_info,
+                type = PreferenceType.WARN
+        )
+
+        val playStoreLink = Preference(
+                title = R.string.playstore_link,
+                summary = R.string.playstore_link_summary,
+                icon = R.drawable.ic_play_store,
+                type = PreferenceType.LINK,
+                onPreferenceAction = { view, callback ->
+                    val intent = Intent(Intent.ACTION_VIEW, "https://play.google.com/store/apps/details?id=app.simple.felicity".toUri())
+                    startActivity(intent)
+                }
+        )
+
         preferences.add(trialHeader)
         preferences.add(trialPeriod)
         preferences.add(gumroadHeader)
         preferences.add(purchaseHeader)
         preferences.add(purchase)
+        preferences.add(playstoreHeader)
+        preferences.add(playStoreInfo)
+        preferences.add(playStoreLink)
 
         return preferences
     }
@@ -100,6 +130,6 @@ class Purchase : PreferenceFragment() {
             return fragment
         }
 
-        const val TAG = "Purchase the Full Version of the Original Variant"
+        const val TAG = "Purchase"
     }
 }
